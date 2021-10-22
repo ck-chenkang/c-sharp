@@ -1,0 +1,132 @@
+# C# 访问 MySql 数据库（通过 MySql.Data）
+
+[[C# 访问 MySql 数据库（通过 MySql.Data）](https://www.cnblogs.com/dhqy/p/12298651.html)](https://www.cnblogs.com/dhqy/p/12298651.html)
+
+1. 添加 NuGet 包
+
+　　在解决方案管理器视图中的目标项目上右键 -> 管理 NuGet 程序包；
+
+``添加 MySql.Data 包，如下图所示：　　
+
+![img](Imag/1261034-20200212125601432-656199551.png)
+
+ 
+
+ 
+
+2. 通过代码访问 MySQL 数据库
+
+- 　数据库帮助类： 　　
+
+
+
+```
+using MySql.Data.MySqlClient;
+
+namespace MySqlDatabaseHelper
+{
+    public class MySqlDatabaseHelper
+    {
+        public string dbConnStr;
+        private MySqlConnection dbConn = null;
+        private MySqlCommand dbCmd = null;
+        private MySqlDataReader dbDataReader = null;
+
+        public MySqlDatabaseHelper(string connectionString)
+        {
+            dbConnStr = connectionString;
+            dbConn = new MySqlConnection(dbConnStr);
+            dbCmd = new MySqlCommand();
+
+            dbCmd.Connection = dbConn;
+        }
+
+        ~MySqlDatabaseHelper()
+        {
+            Close();
+        }
+
+        public void Open()
+        {
+            dbConn.Open();
+        }
+
+        public void Close()
+        {
+            dbConn.Close();
+        }
+
+        public MySqlDataReader ExecuteReader(string sqlStr_Read)
+        {
+            dbCmd.CommandText = sqlStr_Read;
+
+            dbDataReader = dbCmd.ExecuteReader();
+
+            return dbDataReader;
+        }
+
+        public int ExecuteNonQuery(string sqlStr_Insert)
+        {
+            dbCmd.CommandText = sqlStr_Insert;
+
+            int result = dbCmd.ExecuteNonQuery();
+
+            return result;
+        }
+    }
+}
+```
+
+ 
+
+- 访问调用示例：
+
+
+
+```
+using MySql.Data.MySqlClient;
+
+namespace MySqlDatabaseHelper
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string ConnectionString = "server = 127.0.0.1; userid = root; password = 123456; database = test_db; persistsecurityinfo = True;";
+            MySqlDatabaseHelper db_Test = new MySqlDatabaseHelper(ConnectionString);
+
+            // 打开数据库
+            db_Test.Open();
+
+            // sql 查询语句
+            string sqlCmdStr = null;
+
+            // 新增记录
+            sqlCmdStr = "insert into chipinfo_20200209(chipid, chiptype) values('5','S10')";
+            db_Test.ExecuteNonQuery(sqlCmdStr);
+
+            // 删除记录
+            sqlCmdStr = "delete from chipinfo_20200209 where chipid = 4";
+            db_Test.ExecuteNonQuery(sqlCmdStr);
+
+            // 修改数据
+            sqlCmdStr = "update chipinfo_20200209 set boardid = '666' where chipid = '5'";
+            db_Test.ExecuteNonQuery(sqlCmdStr);
+
+            // 查询数据
+            sqlCmdStr = "select * from chipinfo_20200209";
+            MySqlDataReader dataReader = db_Test.ExecuteReader(sqlCmdStr);
+            while (dataReader.Read())
+            {
+                string str = dataReader["chiptype"].ToString();
+            }
+            dataReader.Close();
+
+            // 关闭数据库
+            db_Test.Close();
+        }
+    }
+}
+```
+
+ 
