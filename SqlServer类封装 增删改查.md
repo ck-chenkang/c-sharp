@@ -146,6 +146,10 @@ class SqlCtl
         }
         catch (Exception e)
         {
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             ShowError(e.Message);
             return -1; 
         }
@@ -178,6 +182,10 @@ class SqlCtl
         }
         catch (Exception e)
         {
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
             ShowError(e.Message);
             return -1;
         }
