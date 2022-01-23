@@ -1,3 +1,7 @@
+# VS 内置快捷键
+
+输入简写，然后连敲两次tab键
+
 | 首字母 | 简写             | 生成代码                                                     |
 | ------ | ---------------- | ------------------------------------------------------------ |
 | a      | attachedProperty | public static readonly ???  propertyNameProperty = ???.RegisterAttached(       "propertyName",       typeof(propertyType),       typeof(HomeController),       new  PropertyMetadata(default(propertyType)));          public static void SetpropertyName(DependencyObject element, propertyType  value)     {         element.SetValue(propertyNameProperty, value);     }          public static propertyType GetpropertyName(DependencyObject element)     {       return  (propertyType)element.GetValue(propertyNameProperty);     } |
