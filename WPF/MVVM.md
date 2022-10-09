@@ -338,8 +338,6 @@ namespace WpfMsgReport.ViewModel
 
    
 
-
-
 ```html
 <ComboBox x:Name="voyNoList" ItemsSource="{Binding VoyNoList,UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding Path=SelectVoyNo, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedValuePath="Code">
 	<i:Interaction.Triggers>
