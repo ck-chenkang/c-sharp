@@ -7,7 +7,7 @@
 MVVM是Model、View、ViewModel的简写，这种模式的引入就是使用ViewModel来降低View和Model的耦合，说是降低View和Model的耦合。也可以说是降低界面和逻辑的耦合，理想情况下界面和逻辑是完全分离的，单方面更改界面时不需要对逻辑代码改动，同样的逻辑代码更改时也不需要更改界面。同一个ViewModel可以使用完全不同的View进行展示，同一个View也可以使用不同的ViewModel以提供不同的操作。
 
  ![img](E:\codes\c-sharp\WPF\Imag\20161125103948984)
- 
+
 
 
 
@@ -27,9 +27,9 @@ MVVM是Model、View、ViewModel的简写，这种模式的引入就是使用View
 
   在WPF的MVVM模式中，View和ViewModel之间数据和命令的关联都是通过绑定实现的，绑定后View和ViewModel并不产生直接的依赖。具体就是View中出现数据变化时会尝试修改绑定的目标。同样View执行命令时也会去寻找绑定的Command并执行。反过来，ViewModel在Property发生改变时会发个通知说“名字叫XXX的Property改变了，你们这些View中谁绑定了XXX也要跟着变啊!”，至于有没有View收到是不是做出变化也不关心。ViewModel中的Command脱离View就更简单了，因为Command在执行操作过程中操作数据时，根本不需要操作View中的数据，只需要操作ViewModel中的Property就可以了，Property的变化通过绑定就可以反映到View上。这样在测试Command时也不需要View的参与。这也是我在接触WPF初期时根本理解不了的所谓数据驱动。
  这样一来ViewMode可以在完全没有View的情况下测试，View也可以在完全没有ViewModel的情况下测试(当然只是测试界面布局和动画等业务无关的内容)。
-  
 
-  
+
+
   
 
 ## 二.数据绑定 
@@ -192,7 +192,7 @@ namespace WpfMsgReport
 实现效果：  
 
 ![img](E:\codes\c-sharp\WPF\Imag\20161125113530869)
- 
+
 
 
  
@@ -202,13 +202,13 @@ namespace WpfMsgReport
 ### 1.ViewModel定义命令并绑定实现方法
 
   ![img](E:\codes\c-sharp\WPF\Imag\20161125133718498)
-  
+
 
   ![img](E:\codes\c-sharp\WPF\Imag\20161125133727373)
-  
+
 
   ![img](E:\codes\c-sharp\WPF\Imag\20161125133739424)
-  
+
 
   代码如下： 
 
@@ -290,7 +290,7 @@ namespace WpfMsgReport.ViewModel
 ### 2.在xaml的控件绑定命令，并把界面控件作参数传递到ViewModel的方法中
 
   ![img](E:\codes\c-sharp\WPF\Imag\20161125133805393)
-  
+
 
   代码如下： 
 
@@ -319,20 +319,20 @@ namespace WpfMsgReport.ViewModel
 ###  1.在ViewModel定义命令ChangeVoyNoCommand
 
   ![img](E:\codes\c-sharp\WPF\Imag\20161125141008436)  
-  
 
- 
+
+
  
 
 ### 2.在ViewModel实现方法ChangeVoyNoCommandExecute
 
   ![img](E:\codes\c-sharp\WPF\Imag\20161125141105531)  
-  
+
 
 ### 3.在xaml中导入System.Windows.Interactivity.dll
 
   ![img](E:\codes\c-sharp\WPF\Imag\20161125141225656)
-  
+
 
 ### 4.在控件ComboBox上绑定事件SelectionChanged和命令ChangeVoyNoCommand
 
@@ -351,8 +351,7 @@ namespace WpfMsgReport.ViewModel
 ### 5.实现效果
 
   ![img](E:\codes\c-sharp\WPF\Imag\20161125141558829)
-  
 
-  
- 
-  
+
+
+ or
